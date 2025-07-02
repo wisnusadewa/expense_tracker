@@ -1,12 +1,12 @@
 import CreateOrEditCategories from './CreateOrEditCategories';
 
-interface EditCategories {
+interface EditCategoriesParams {
   idEdit: string;
   openEdit: boolean;
   setOpenEdit: (ctx: boolean) => void;
   categoriesData: Category;
 }
-const EditCategories = ({ idEdit, openEdit, setOpenEdit, categoriesData }: EditCategories) => {
+const EditCategories = ({ idEdit, openEdit, setOpenEdit, categoriesData }: EditCategoriesParams) => {
   return (
     <div>
       <CreateOrEditCategories
@@ -17,7 +17,7 @@ const EditCategories = ({ idEdit, openEdit, setOpenEdit, categoriesData }: EditC
         type="update"
         textButton="submit"
         titleTriger="Edit"
-        titleHeader="Edit Form"
+        titleHeader="Edit Categories"
         titleTrigerClassName="text-foreground"
       />
     </div>

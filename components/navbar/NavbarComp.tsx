@@ -18,7 +18,7 @@ const NavbarComp = async () => {
           <Link href={'/'}>Expense Tracker</Link>
         </div>
 
-        <div>{user && <NavbarItems />}</div>
+        <div className="hidden md:block">{user && <NavbarItems />}</div>
 
         {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
       </div>

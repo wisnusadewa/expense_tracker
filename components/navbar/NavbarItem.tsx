@@ -23,6 +23,10 @@ const items: ItemsABAC[] = [
     title: 'Categories',
     url: '/categories',
   },
+  {
+    title: 'Budgets',
+    url: '/budgets',
+  },
 ];
 
 const NavbarItems = () => {

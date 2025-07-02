@@ -26,12 +26,12 @@ export const useCreateCategories = () => {
         id: `id-${Date.now()}`,
         name: newData.name,
         type: newData.type,
-        created_at: `${Date.now()}`,
+        created_at: new Date().toISOString(),
       };
 
       queryClient.setQueryData<Category[]>(queryKey, (old) => {
         const category = ensureArray(old);
-        return [...category, optimisticDataCategory];
+        return [optimisticDataCategory, ...category];
       });
 
       return { prevData };

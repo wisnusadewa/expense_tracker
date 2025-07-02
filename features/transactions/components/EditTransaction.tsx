@@ -1,17 +1,28 @@
-'use client';
+import TransactionForm from './TransactionForm';
 
-import { TransactionFormValues } from '@/validator/transaction';
-import { AddTransaction } from './CreateTransaction';
-import { useTransactionForm } from './TransactionForm';
+interface EditTransactionParams {
+  idEdit: string;
+  openEdit: boolean;
+  setOpenEdit: (ctx: boolean) => void;
+  transactionData: Transaction;
+}
 
-type Props = {
-  transaction: TransactionFormValues;
-  categories: { id: number; name: string; type: 'income' | 'expense' }[];
-  onSubmit: (data: TransactionFormValues) => void;
+const EditTransaction = ({ idEdit, openEdit, setOpenEdit, transactionData }: EditTransactionParams) => {
+  return (
+    <div>
+      <TransactionForm
+        transactionData={transactionData}
+        idEdit={idEdit}
+        setOpenDialog={setOpenEdit}
+        openDialog={openEdit}
+        type="update"
+        textButton="submit"
+        titleTriger="Edit"
+        titleHeader="Edit Transaction"
+        titleTrigerClassName="text-foreground"
+      />
+    </div>
+  );
 };
 
-export function EditTransactionForm({ transaction, categories, onSubmit }: Props) {
-  const form = useTransactionForm(transaction); // panggil?
-
-  return <AddTransaction onSubmit={onSubmit} categories={categories} />;
-}
+export default EditTransaction;

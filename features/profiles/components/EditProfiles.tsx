@@ -8,7 +8,7 @@ import { editProfileSchema, EditProfileSchemaType } from '@/validator/profile';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface EditProfilesParams {
@@ -140,9 +140,11 @@ const EditProfiles = ({ textButton, titleTriger, titleTrigerClassName, titleHead
                 label="Image"
                 type="file"
                 onChangeCustom={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    setPreview(URL.createObjectURL(file));
+                  if (typeof e === 'object' && 'target' in e) {
+                    const file = (e as React.ChangeEvent<HTMLInputElement>).target.files?.[0];
+                    if (file) {
+                      setPreview(URL.createObjectURL(file));
+                    }
                   }
                 }}
               />

@@ -5,10 +5,16 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
 import { useUser } from '@/context/AuthContext';
+import { useGetBudgets } from '@/features/budgets/hooks/useGetBudgets';
 import { useGetCategories } from '@/features/categories/hooks/useGetCategories';
-import { CreateTransactionFormType, transactionSchema } from '@/validator/transaction';
+import { CreateTransactionFormType, editTransactionSchema, transactionSchema } from '@/validator/transaction';
+import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import helperTransactions from '../helper/helperTransactions';
+import { useCreateTransactions } from '../hooks/useCreateTransactions';
+import { useEditTransactions } from '../hooks/useEditTransactions';
 
 interface TransactionFormParams {
   titleTriger: string;
@@ -23,47 +29,87 @@ interface TransactionFormParams {
   setOpenDialog: (ctx: boolean) => void;
   openDialog: boolean;
   idEdit?: string;
+  transactionData?: Transaction;
 }
 
-const TransactionForm = ({ textButton, titleTriger, titleTrigerClassName, titleHeader, textDialogDescription, classNameButton, iconButton, dialogTriggerClassName, type, openDialog, setOpenDialog, idEdit }: TransactionFormParams) => {
+const TransactionForm = ({
+  textButton,
+  titleTriger,
+  titleTrigerClassName,
+  titleHeader,
+  textDialogDescription,
+  classNameButton,
+  iconButton,
+  dialogTriggerClassName,
+  type,
+  openDialog,
+  setOpenDialog,
+  idEdit,
+  transactionData,
+}: TransactionFormParams) => {
   const { data: categories } = useGetCategories();
+  const createTransactions = useCreateTransactions();
+  const editTransacitons = useEditTransactions();
+  const { data: budgets } = useGetBudgets();
   const user = useUser();
-
-  console.log('categories di transaction', categories);
 
   const form = useForm<CreateTransactionFormType>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      // category_id: defaultValues?.category_id ?? undefined,
-      // amount: defaultValues?.amount ?? 0,
-      // type: defaultValues?.type ?? 'expense',
-      // description: defaultValues?.description ?? '',
-      // date: defaultValues?.date ?? new Date().toISOString().split('T')[0],
-
-      type: 'expense',
-      date: new Date().toISOString().split('T')[0],
       user_id: user?.id ?? '',
-      description: '',
-      category_id: 0,
-      amount: 0,
+      category_id: transactionData?.category_id ?? undefined,
+      amount: transactionData?.amount ?? 0,
+      type: transactionData?.type ?? 'expense',
+      description: transactionData?.description ?? '',
+      date: transactionData?.date ?? new Date().toISOString().split('T')[0],
     },
   });
 
+  const { setValue } = form;
+
   if (!categories || !user) return null;
 
-  const onSubmit: SubmitHandler<CreateTransactionFormType> = (data) => {
-    // const finalData = {
-    //   user_id: user.id,
-    //   type: data.type,
-    //   date: data.date,
-    //   category_id: Number(data.category_id),
-    //   amount: Number(data.amount),
-    //   description: data.description,
-    // };
+  const onSubmit: SubmitHandler<CreateTransactionFormType> = async (data) => {
+    if (type === 'create') {
+      const parse = transactionSchema.parse(data);
+      const relatedBudgets = budgets?.filter((budget) => helperTransactions(parse, budget));
 
-    setOpenDialog(false);
-    form.reset();
-    console.log('data create?', data);
+      if (!relatedBudgets || relatedBudgets.length === 0) {
+        return toast.error('transaksi diluar periode budget yang ditentukan atau tidak memiliki budgets!');
+      }
+      createTransactions.mutateAsync(parse);
+      setOpenDialog(false);
+      form.reset();
+      // console.log('data create?', data);
+      toast.success('transactions success created!');
+    } else if (type === 'update') {
+      const finalData = {
+        ...data,
+        id: Number(idEdit),
+      };
+
+      const parse = editTransactionSchema.parse(finalData);
+
+      if (!parse.category_id || !parse.date || !parse.type || !parse.amount || !parse.user_id) {
+        return toast.error('Data tidak lengkap untuk validasi budget');
+      }
+
+      const relatedBudgets = budgets?.filter((budget) => helperTransactions(parse, budget));
+
+      console.log('relatedBudgets', relatedBudgets);
+
+      if (!relatedBudgets || relatedBudgets.length === 0) {
+        console.log('Budget check failed, canceling update');
+        return toast.error('transaksi diluar periode budget yang ditentukan atau tidak memiliki budgets!');
+      }
+
+      editTransacitons.mutateAsync(parse);
+      // console.log('parse edit?', parse);
+      setOpenDialog(false);
+      form.reset();
+      toast.success('transactions edited!');
+      console.log('error form:', form.formState.errors);
+    }
   };
 
   const typeSelect = [
@@ -97,23 +143,27 @@ const TransactionForm = ({ textButton, titleTriger, titleTrigerClassName, titleH
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField control={form.control} name="category_id" label="Category" type="select" optionsRole={CategoryIdOption} />
-              <FormField control={form.control} name="type" label="Type" type="select" optionsRole={typeSelect} />
+              <FormField
+                control={form.control}
+                name="category_id"
+                label="Category"
+                type="select"
+                optionsRole={CategoryIdOption}
+                onChangeCustom={(val) => {
+                  const selectedCategory = categories.find((e) => Number(e.id) === Number(val));
+                  if (selectedCategory) setValue('type', selectedCategory.type);
+                }}
+              />
+              <FormField control={form.control} name="type" label="Type" type="select" optionsRole={typeSelect} disabled />
               <FormField control={form.control} name="amount" label="Amount" type="number" />
               <FormField control={form.control} name="date" label="Date" type="date" />
               <FormField control={form.control} name="description" label="Description" type="textarea" />
-
-              {/* 
-                
-                <Input type="number" step="0.01" {...field} onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))} value={field.value ?? ''} />
-                */}
-
               <Button type="submit">Save Transaction</Button>
             </form>
+            <DevTool control={form.control} />
           </Form>
         </DialogContent>
       </Dialog>
-      ;
     </div>
   );
 };

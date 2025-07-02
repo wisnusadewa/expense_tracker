@@ -13,10 +13,10 @@ const CreateCategories = () => {
         type="create"
         textButton="submit"
         titleTriger="Add Category"
-        titleHeader="Add Form"
+        titleHeader="Add Category"
         titleTrigerClassName="text-foreground"
         iconButton={<CirclePlus size={20} />}
-        dialogTriggerClassName="px-0 py-1.5 w-full bg-transparent flex items-center rounded-none md:text-[14px] text-[12px] font-medium cursor-pointer gap-2"
+        dialogTriggerClassName="px-0 py-1.5 w-full bg-transparent flex items-center rounded-none md:text-[14px] text-[12px] font-medium cursor-pointer gap-2 border px-2 rounded-sm"
       />
     </div>
   );

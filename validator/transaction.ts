@@ -11,8 +11,8 @@ export const transactionSchema = z.object({
   }),
 });
 
-const editTransactionSchema = transactionSchema.partial().extend({
-  id: z.number().min(1),
+export const editTransactionSchema = transactionSchema.partial().extend({
+  id: z.number().min(1, 'id harus number'),
 });
 
 export type CreateTransactionFormType = z.infer<typeof transactionSchema>;

@@ -1,5 +1,6 @@
 import { ensureArray } from '@/features/_shared/ensureArray';
 import { createClient } from '@/lib/supabase/client';
+import { CreateTransactionFormType } from '@/validator/transaction';
 import { QueryKey, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -9,7 +10,7 @@ export const useCreateTransactions = () => {
   const supabase = createClient();
 
   return useMutation({
-    mutationFn: async (dataTransactions: Transaction) => {
+    mutationFn: async (dataTransactions: CreateTransactionFormType) => {
       const { data, error } = await supabase.from('transactions').insert(dataTransactions);
       if (error) throw new Error(error.message);
       return data;
@@ -21,20 +22,20 @@ export const useCreateTransactions = () => {
       const prevData = queryClient.getQueryData<Transaction[]>(queryKey);
 
       const newDataOptimistic: Transaction = {
-        id: Date.now(),
+        id: `${Date.now()}`,
         user_id: newData.user_id,
         amount: newData.amount,
         type: newData.type,
         category_id: newData.category_id,
         description: newData.description,
         date: newData.date,
-        created_at: `${Date.now()}`,
+        created_at: new Date().toISOString(),
       };
 
       queryClient.setQueryData<Transaction[]>(queryKey, (old) => {
         const transaction = ensureArray<Transaction>(old);
 
-        return [...transaction, newDataOptimistic];
+        return [newDataOptimistic, ...transaction];
       });
 
       return { prevData };

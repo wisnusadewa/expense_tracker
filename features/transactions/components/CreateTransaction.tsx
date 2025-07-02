@@ -1,6 +1,6 @@
 'use client';
 
-import { CirclePlus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import TransactionForm from './TransactionForm';
 
@@ -17,8 +17,8 @@ const CreateTransaction = () => {
         titleTriger="Add Transaction"
         titleHeader="Add Form"
         titleTrigerClassName="text-foreground"
-        iconButton={<CirclePlus size={20} />}
-        dialogTriggerClassName="px-0 py-1.5 w-full bg-transparent flex items-center rounded-none md:text-[14px] text-[12px] font-medium cursor-pointer gap-2"
+        iconButton={<Plus size={20} className="border border-black" />}
+        dialogTriggerClassName="px-0 py-1.5 w-fit bg-transparent flex items-center rounded-none text-[18px] font-medium cursor-pointer gap-2"
       />
     </div>
   );

@@ -1,7 +1,6 @@
 'use client';
 
 import { useGetCategories } from '../hooks/useGetCategories';
-import CreateCategories from './CreateCategories';
 import TableComp from './table/TableComp';
 
 const CategoriesComp = () => {
@@ -9,9 +8,7 @@ const CategoriesComp = () => {
   if (!categories) return null;
 
   return (
-    <div className="px-6 py-6">
-      <CreateCategories />
-
+    <div>
       {/* Table Data category */}
       <TableComp categories={categories} />
     </div>

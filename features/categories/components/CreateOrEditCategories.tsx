@@ -56,25 +56,25 @@ const CreateOrEditCategories = ({
     defaultValues: {
       name: categoriesData?.name,
       type: categoriesData?.type,
+      user_id: user?.id ?? '',
     },
   });
 
   const onSubmit = async (data: CreateCategoriesSchemaType) => {
     if (type === 'create') {
-      const finalData = {
-        name: data.name,
-        type: data.type,
-        user_id: user.id,
-      };
-      // console.log('finalData create?:', finalData);
-      createCategory.mutateAsync(finalData);
+      // const finalData = {
+      //   name: data.name,
+      //   type: data.type,
+      //   user_id: user.id,
+      // };
+      const parse = createCategoriesSchema.parse(data);
+      createCategory.mutateAsync(parse);
       form.reset();
       setOpenDialog(false);
       toast.success('category ditambahkan!');
     } else if (type === 'update') {
       const finalData = {
         ...data,
-        user_id: user.id,
         id: idEdit,
       };
 

@@ -18,10 +18,11 @@ interface FormFieldProps<T extends FieldValues> {
   type?: 'text' | 'password' | 'select' | 'file' | 'date' | 'textarea' | 'number'; // type input
   optionsRole?: OptionRoleProps[]; // select role
   rows?: number;
-  onChangeCustom?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  disabled?: boolean;
+  onChangeCustom?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | number | string) => void;
 }
 
-const FormField = <T extends FieldValues>({ control, name, type = 'text', label, placeholder, optionsRole, onChangeCustom, rows }: FormFieldProps<T>) => {
+const FormField = <T extends FieldValues>({ control, name, type = 'text', label, placeholder, optionsRole, onChangeCustom, rows, disabled }: FormFieldProps<T>) => {
   return (
     <Controller
       name={name}
@@ -34,9 +35,6 @@ const FormField = <T extends FieldValues>({ control, name, type = 'text', label,
               field.onChange(file); // kirim FileList ke react-hook-form
               onChangeCustom?.(e as React.ChangeEvent<HTMLInputElement>); // trigger preview
             }
-          } else if (type === 'number') {
-            const val = e.target.value;
-            field.onChange(val === '' ? undefined : Number(val));
           } else {
             field.onChange(e);
           }
@@ -55,10 +53,11 @@ const FormField = <T extends FieldValues>({ control, name, type = 'text', label,
                       const shouldBeNumber = typeof foundOption?.value === 'number';
 
                       field.onChange(shouldBeNumber ? Number(val) : val);
+                      onChangeCustom?.(val);
                     }}
                     value={field.value ? String(field.value) : ''}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full" disabled={disabled}>
                       <SelectValue placeholder={placeholder} />
                     </SelectTrigger>
                     <SelectContent>
@@ -72,7 +71,7 @@ const FormField = <T extends FieldValues>({ control, name, type = 'text', label,
                 ) : type === 'file' ? (
                   <Input type="file" name={field.name} ref={field.ref} onChange={handleChange} className="w-full" />
                 ) : type === 'textarea' ? (
-                  <textarea {...field} rows={4} placeholder={placeholder} className="w-full rounded border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+                  <textarea {...field} rows={rows} placeholder={placeholder} className="w-full rounded border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-primary" />
                 ) : type === 'number' ? (
                   <Input
                     type="number"
@@ -85,7 +84,7 @@ const FormField = <T extends FieldValues>({ control, name, type = 'text', label,
                     className="w-full"
                   />
                 ) : (
-                  <Input type={type} placeholder={placeholder} {...field} className="w-full" />
+                  <Input type={type} placeholder={placeholder} {...field} className="w-full" disabled={disabled} />
                 )
                 // <Input type={type} placeholder={placeholder} {...field} className="w-full" onChange={handleChange} />
               }
