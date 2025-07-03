@@ -17,7 +17,18 @@ const budgetsSchema = z.object({
     .min(1, { message: 'Amount must be greater than 0' }),
 });
 
-export const createBudgetsSchema = budgetsSchema;
+export const createBudgetsSchema = budgetsSchema.refine(
+  (val) => {
+    const start = new Date(val.start_date);
+    const end = new Date(val.end_date);
+    return end >= start;
+  },
+  {
+    path: ['end_date'], // penting: beri tahu bahwa error muncul di end_date
+    message: 'End date must be after or same as start date',
+  }
+);
+
 export const editBudgetsSchema = budgetsSchema.partial().extend({
   id: z.number({
     required_error: 'id is required',

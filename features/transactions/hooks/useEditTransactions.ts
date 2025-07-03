@@ -25,7 +25,7 @@ export const useEditTransactions = () => {
       const prevData = queryClient.getQueryData<Transaction[]>(queryKey);
 
       const optimisticUpdateDataTransaction: Transaction = {
-        id: String(newData.id),
+        id: Number(newData.id),
         category_id: Number(newData.category_id),
         amount: Number(newData.amount),
         type: newData.type as CategoriesType,

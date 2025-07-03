@@ -9,7 +9,7 @@ const Cta = () => {
 
   return (
     <div className="flex flex-col gap-5 justify-center items-center">
-      <Link href="/transaction" className="bg-main flex justify-center items-center text-background w-full text-[18px] md:w-[358px] h-[67px] rounded-[40px] shadow-md shadow-foreground ">
+      <Link href="/transaction" className="bg-foreground flex justify-center items-center text-background w-full text-[18px] md:w-[358px] h-[67px] rounded-[40px] shadow-md shadow-primary ">
         Get Started
       </Link>
 

@@ -8,6 +8,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import { useState } from 'react';
+import DeleteTransaction from '../../DeleteTransaction';
 import EditTransaction from '../../EditTransaction';
 
 export const Columns: ColumnDef<Transaction>[] = [
@@ -97,7 +98,7 @@ export const Columns: ColumnDef<Transaction>[] = [
           </DropdownMenu>
 
           {/* Delete */}
-          {/* {openDelete && <DeleteCategories idRemove={categories.id} openDelete={openDelete} setOpenDelete={setOpenDelete} />} */}
+          {openDelete && <DeleteTransaction idRemove={transaction.id} openDelete={openDelete} setOpenDelete={setOpenDelete} />}
 
           {/* Edit */}
           {openEdit && <EditTransaction transactionData={transaction} idEdit={String(transaction.id)} openEdit={openEdit} setOpenEdit={setOpenEdit} />}

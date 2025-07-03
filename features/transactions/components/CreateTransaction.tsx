@@ -17,8 +17,8 @@ const CreateTransaction = () => {
         titleTriger="Add Transaction"
         titleHeader="Add Form"
         titleTrigerClassName="text-foreground"
-        iconButton={<Plus size={20} className="border border-black" />}
-        dialogTriggerClassName="px-0 py-1.5 w-fit bg-transparent flex items-center rounded-none text-[18px] font-medium cursor-pointer gap-2"
+        iconButton={<Plus size={20} className="border border-foreground" />}
+        dialogTriggerClassName="w-fit flex items-center text-[18px] font-medium cursor-pointer gap-2"
       />
     </div>
   );

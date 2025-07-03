@@ -1,3 +1,5 @@
+'use client';
+
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import React from 'react';
 
@@ -6,16 +8,21 @@ interface DrawerCompParams {
   DrawerTitleText?: string;
   DrawerDescriptionText?: string;
   children?: React.ReactNode;
-  buttonText?: string;
-  buttonTextClose?: string;
+  drawerTriggerText?: string;
+  drawerTriggerClassName?: string;
   openDrawer: boolean;
   setOpenDrawer: (ctx: boolean) => void;
 }
 
-const DrawerComp = ({ icon, DrawerTitleText, DrawerDescriptionText, children, buttonText, buttonTextClose, openDrawer, setOpenDrawer }: DrawerCompParams) => {
+const DrawerComp = ({ icon, DrawerTitleText, DrawerDescriptionText, children, drawerTriggerText, openDrawer, drawerTriggerClassName, setOpenDrawer }: DrawerCompParams) => {
   return (
     <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
-      <DrawerTrigger asChild>{icon}</DrawerTrigger>
+      <DrawerTrigger asChild>
+        <div className={drawerTriggerClassName}>
+          {icon}
+          <span>{drawerTriggerText}</span>
+        </div>
+      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>{DrawerTitleText}</DrawerTitle>

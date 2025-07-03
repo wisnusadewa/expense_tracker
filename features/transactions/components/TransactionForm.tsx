@@ -1,5 +1,6 @@
 'use client';
 
+import { FormDatePicker } from '@/components/formDatePicker/FormDatePicker';
 import FormField from '@/components/formField/FormField';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -74,7 +75,7 @@ const TransactionForm = ({
       const parse = transactionSchema.parse(data);
       const relatedBudgets = budgets?.filter((budget) => helperTransactions(parse, budget));
 
-      if (!relatedBudgets || relatedBudgets.length === 0) {
+      if (!relatedBudgets) {
         return toast.error('transaksi diluar periode budget yang ditentukan atau tidak memiliki budgets!');
       }
       createTransactions.mutateAsync(parse);
@@ -156,7 +157,7 @@ const TransactionForm = ({
               />
               <FormField control={form.control} name="type" label="Type" type="select" optionsRole={typeSelect} disabled />
               <FormField control={form.control} name="amount" label="Amount" type="number" />
-              <FormField control={form.control} name="date" label="Date" type="date" />
+              <FormDatePicker control={form.control} name="date" label="Date" />
               <FormField control={form.control} name="description" label="Description" type="textarea" />
               <Button type="submit">Save Transaction</Button>
             </form>

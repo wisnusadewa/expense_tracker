@@ -22,7 +22,7 @@ export const useCreateTransactions = () => {
       const prevData = queryClient.getQueryData<Transaction[]>(queryKey);
 
       const newDataOptimistic: Transaction = {
-        id: `${Date.now()}`,
+        id: Date.now(),
         user_id: newData.user_id,
         amount: newData.amount,
         type: newData.type,
