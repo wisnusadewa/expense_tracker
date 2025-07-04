@@ -47,7 +47,7 @@ export function FormDatePicker<T extends FieldValues>({ control, name, label, mi
                 </PopoverContent>
               </Popover>
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-[14px]">{fieldState.error?.message}</FormMessage>
           </FormItem>
         );
       }}
