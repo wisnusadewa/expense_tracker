@@ -65,11 +65,11 @@ const BudgetsForm = ({ budgets, type, openDrawer, setOpenDrawer }: BudgetsFormPa
       <DrawerComp
         openDrawer={openDrawer}
         setOpenDrawer={setOpenDrawer}
-        icon={<Plus size={20} className="border border-foreground" />}
+        icon={<Plus size={20} className="border border-white" />}
         DrawerDescriptionText="silahkan tambahkan budget untuk setiap category"
         DrawerTitleText="Add your budgets"
         drawerTriggerText="Add Budgets"
-        drawerTriggerClassName="w-fit flex items-center text-[18px] font-medium cursor-pointer gap-2"
+        drawerTriggerClassName="w-fit flex items-center text-[18px] font-medium cursor-pointer gap-2 text-white"
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-10">
