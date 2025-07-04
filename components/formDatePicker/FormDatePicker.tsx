@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { FormControl, FormItem, FormLabel } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -21,7 +21,7 @@ export function FormDatePicker<T extends FieldValues>({ control, name, label, mi
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState }) => {
+      render={({ field }) => {
         const valueAsDate = field.value ? new Date(field.value) : undefined;
 
         return (
@@ -47,7 +47,6 @@ export function FormDatePicker<T extends FieldValues>({ control, name, label, mi
                 </PopoverContent>
               </Popover>
             </FormControl>
-            <FormMessage className="text-[14px]">{fieldState.error?.message}</FormMessage>
           </FormItem>
         );
       }}
