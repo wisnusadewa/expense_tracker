@@ -62,7 +62,7 @@ const TransactionForm = ({
       amount: transactionData?.amount ?? 0,
       type: transactionData?.type ?? 'expense',
       description: transactionData?.description ?? '',
-      date: transactionData?.date ?? new Date().toISOString().split('T')[0],
+      date: transactionData?.date ?? new Date().toLocaleDateString('en-CA'),
     },
   });
 

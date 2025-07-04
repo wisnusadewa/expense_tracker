@@ -36,8 +36,8 @@ const BudgetsForm = ({ budgets, type, openDrawer, setOpenDrawer }: BudgetsFormPa
       user_id: user?.id ?? '',
       amount_limit: 0,
       category_id: undefined,
-      start_date: new Date().toISOString().split('T')[0],
-      end_date: new Date().toISOString().split('T')[0],
+      start_date: new Date().toLocaleDateString('en-CA'),
+      end_date: new Date().toLocaleDateString('en-CA'),
     },
   });
 

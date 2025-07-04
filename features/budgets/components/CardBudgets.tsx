@@ -1,5 +1,6 @@
 import ArcProgressComp from '@/components/arcProgress/ArcProgressComp';
 import FormatRupiah from '@/components/formatRupiah/FormatRupiah';
+import { Badge } from '@/components/ui/badge';
 
 interface CardBudgetsParams {
   budgets: Budgets[];
@@ -27,20 +28,30 @@ const CardBudgets = ({ budgets, transactions }: CardBudgetsParams) => {
   // percentage
 
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4 ">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
       {budgetTransactionByType.map((e, idx) => {
         return (
-          <div key={idx} className="bg-foreground/10 shadow-lg flex flex-col h-72 w-72 rounded-lg justify-center items-center gap-2 mx-auto">
+          <div key={idx} className="bg-foreground/15 border border-muted-foreground trapezoid backdrop-blur-lg flex flex-col h-96 w-80 justify-center items-center gap-2 mx-auto">
             <ArcProgressComp percentage={e.percentage} />
-            <div className="flex flex-col items-center gap-2">
-              <p>{e.budgets_category_id_fkey?.name}</p>
-              <div className="flex flex-col w-full justify-center items-center">
-                <p>
-                  {FormatRupiah(Number(e.usedAmount))} / {FormatRupiah(e.amount_limit)}
-                </p>
-                <p>Remaining : {FormatRupiah(Number(e.remaining))}</p>
-                <p>Start date : {e.start_date}</p>
-                <p>End date : {e.end_date}</p>
+            <div className="flex flex-col w-full px-7 justify-start gap-2 text-white ">
+              <div className="w-full flex justify-center font-semibold text-[20px] capitalize mb-5">
+                <p className="w-fit px-2 rounded-sm">{e.budgets_category_id_fkey?.name}</p>
+              </div>
+              <div className="flex justify-between">
+                <p>Amount Used</p>
+                <span className="font-semibold">{FormatRupiah(Number(e.usedAmount))}</span>
+              </div>
+              <div className="flex justify-between">
+                <p>Amount Limit</p>
+                <span className="font-semibold">{FormatRupiah(e.amount_limit)}</span>
+              </div>
+              <div className="flex justify-between">
+                <p>Remaining</p>
+                <span className="font-semibold">{FormatRupiah(Number(e.remaining))}</span>
+              </div>
+              <div className="flex w-full justify-between">
+                <Badge>{e.start_date}</Badge>
+                <Badge>{e.end_date}</Badge>
               </div>
             </div>
           </div>

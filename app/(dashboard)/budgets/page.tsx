@@ -2,7 +2,7 @@ import BudgetsComp from '@/features/budgets/components/BudgetsComp';
 
 const page = () => {
   return (
-    <div>
+    <div className="">
       <BudgetsComp />
     </div>
   );

@@ -59,9 +59,9 @@
   } */
 
   :root {
-    --background: 274 52% 95%;
+    --background: 274 0% 95%;
     --foreground: 274 5% 10%;
-    --card: 274 50% 90%;
+    --card: 274 0% 100%;
     --card-foreground: 274 5% 15%;
     --popover: 274 52% 95%;
     --popover-foreground: 274 95% 10%;
@@ -84,11 +84,12 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --green: 145, 61%, 59%;
   }
   .dark {
-    --background: 274 50% 10%;
+    --background: 274 50% 5%;
     --foreground: 274 5% 90%;
-    --card: 274 50% 10%;
+    --card: 274 20% 15%;
     --card-foreground: 274 5% 90%;
     --popover: 274 50% 5%;
     --popover-foreground: 274 5% 90%;
@@ -112,6 +113,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --green: 145, 61%, 59%;
   }
 }
 
@@ -124,8 +126,16 @@
   }
 }
 
-@layer utilities {
-  .clip-bottom-curve {
-    clip-path: ellipse(70% 100% at 50% 100%);
+@layer components {
+  .trapezoid {
+    clip-path: polygon(10% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%, 0% 10%);
+  }
+
+  .card-custom {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 85% 100%, 75% 90%, 25% 90%, 15% 100%, 0 100%);
+  }
+
+  .button-card-custom {
+    clip-path: polygon(26% 10%, 74% 10%, 85% 100%, 15% 100%);
   }
 }

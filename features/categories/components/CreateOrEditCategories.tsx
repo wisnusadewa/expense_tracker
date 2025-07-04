@@ -62,11 +62,6 @@ const CreateOrEditCategories = ({
 
   const onSubmit = async (data: CreateCategoriesSchemaType) => {
     if (type === 'create') {
-      // const finalData = {
-      //   name: data.name,
-      //   type: data.type,
-      //   user_id: user.id,
-      // };
       const parse = createCategoriesSchema.parse(data);
       createCategory.mutateAsync(parse);
       form.reset();

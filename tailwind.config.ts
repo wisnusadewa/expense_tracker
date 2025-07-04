@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 export default {
+  // safelist: ['glass-card'],
   darkMode: ['class'],
   content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}', './src/**/*.{js,ts,jsx,tsx,mdx}', './features/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
@@ -46,6 +47,7 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        green_custom: '#58d68d',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -54,10 +56,11 @@ export default {
       },
       backgroundImage: {
         main: 'linear-gradient(to bottom right, #429690, #2A7C76)',
+        custom: 'linear-gradient(to bottom right, #58d68d, #7f47aa)',
       },
-      textColor: {
-        main_text: 'var(--main-text)',
-      },
+      // textColor: {
+      //   green_custom: '#58d68d',
+      // },
     },
   },
   plugins: [require('tailwindcss-animate')],

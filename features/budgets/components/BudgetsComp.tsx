@@ -12,7 +12,7 @@ const BudgetsComp = () => {
   console.log('categories in budgets :', budgets);
 
   return (
-    <div className="flex flex-col p-6 gap-10">
+    <div className="flex flex-col p-6 gap-10 min-h-screen bg-cover bg-center bg-[url('/budgets/bg_main_custom.jpg')]">
       {/* create budget */}
       <CreateBudgets />
 

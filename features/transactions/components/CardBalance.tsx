@@ -17,7 +17,7 @@ const CardBalance = () => {
   const totalBalance = total?.income - total?.expense;
 
   return (
-    <div className="flex flex-col justify-between p-5 h-[210px] w-[380px] rounded-xl">
+    <div className="card-custom bg-foreground/15 backdrop-blur-sm border border-muted-foreground flex flex-col justify-between p-5 h-[210px] w-[380px] rounded-md">
       <div className="flex">
         <div className="flex flex-col w-full h-full justify-center ">
           <p>Total Balance</p>
@@ -28,7 +28,7 @@ const CardBalance = () => {
       <div className="flex justify-between items-center w-full h-full ">
         <div>
           <div className="flex justify-start items-center gap-1">
-            <ArrowDown size={16} className="rounded-full bg-foreground/40" />
+            <ArrowDown size={16} className="rounded-full bg-background/40" />
             <p>income</p>
           </div>
           <p>{FormatRupiah(total.income)}</p>
@@ -36,7 +36,7 @@ const CardBalance = () => {
 
         <div>
           <div className="flex justify-end items-center gap-1">
-            <ArrowUp size={16} className="rounded-full bg-foreground/40" />
+            <ArrowUp size={16} className="rounded-full bg-background/40" />
             <p>Expense</p>
           </div>
           <p>{FormatRupiah(total.expense)}</p>
